@@ -1,0 +1,38 @@
+{
+    "A92E700": {
+        "name": "音樂舞蹈戲劇",
+        "department": "通識中心",
+        "chooseOrselect": "必修",
+        "time": [
+            "T-3",
+            "T-4"
+        ],
+        "timeraw": "[2]3~4",
+        "teacher": "林怡薇",
+        "credit": 2
+    },
+    "A92F000": {
+        "name": "西方古典音樂",
+        "department": "通識中心",
+        "chooseOrselect": "必修",
+        "time": [
+            "W-3",
+            "W-4"
+        ],
+        "timeraw": "[3]3~4",
+        "teacher": "林怡薇",
+        "credit": 2
+    },
+    "A92F001": {
+        "name": "東方閃電",
+        "department": "通識中心",
+        "chooseOrselect": "必修",
+        "time": [
+            "W-4",
+            "W-5"
+        ],
+        "timeraw": "[3]4~5",
+        "teacher": "林怡薇",
+        "credit": 2
+    }
+}
