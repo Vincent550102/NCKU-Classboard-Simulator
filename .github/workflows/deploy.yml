@@ -14,5 +14,5 @@ jobs:
           fetch-depth: 0
       - name: Deploy
         run: git checkout gh-page
-      - name: pull
-        run: git pull -f origin master
+      - name: clone
+        run: git clone --depth 1 git@github.com:Vincent550102/NCKU-Classboard-Simulator.git
