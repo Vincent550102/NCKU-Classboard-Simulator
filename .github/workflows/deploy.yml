@@ -1,4 +1,4 @@
-name: HTML Deploy
+name: HTML Deploy gh-page
 
 on:
   push:
