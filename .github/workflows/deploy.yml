@@ -13,5 +13,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: Vincent550102/NCKU-Classboard-Simulator
           publish_dir: ./
           publish_branch: gh-page
