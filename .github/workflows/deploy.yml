@@ -9,15 +9,8 @@ jobs:
   build-deploy:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-          fetch-depth: 0
-      - name: Deploy
-        run: git checkout gh-page
-      - name: commit to gh-page
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "bot commit"
-          git push
+          owner: 'Vincent550102'
+          repository: 'NCKU-Classboard-Simulator'
