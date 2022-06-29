@@ -275,7 +275,7 @@ function putExportCopyBtn() {
           </svg>`);
             $("#urlButton_code").removeClass("btn-secondary")
                 .addClass("btn-success");
-            alert(`複製成功`)
+            $.toaster('複製成功', '匯出代碼', 'success');
         } else {
             $("#urlButton_code").text("複製失敗 :(");
             $("#urlButton_code").removeClass("btn-secondary")
@@ -293,7 +293,7 @@ function putExportCopyBtn() {
           </svg>`);
             $("#urlButton_url").removeClass("btn-secondary")
                 .addClass("btn-success");
-            alert(`複製成功`)
+            $.toaster('複製成功', '匯出網址', 'success');
         } else {
             $("#urlButton_url").text("複製失敗 :(");
             $("#urlButton_url").removeClass("btn-secondary")
@@ -365,12 +365,6 @@ function putTableconvertImageBtn() {
     })
 }
 
-function alerter(title, context) {
-    $("#toast-title").text(title)
-    $("#toast-context").text(context)
-    var toast = new bootstrap.Toast($("#alertToast"))
-    toast.show()
-}
 
 $(document).ready(function () {
     init()
@@ -378,8 +372,6 @@ $(document).ready(function () {
     putExportCopyBtn()
     putClassImportbtnSubmit()
     putTableconvertImageBtn()
-    alerter("owo", "43434")
-    alerter("owo24", "4343q4")
     // console.log($("#classboard").html())
     //["A92E700"]
     // Cookies.set('classSess', 'WyJBOTJFNzAwIl0=');
