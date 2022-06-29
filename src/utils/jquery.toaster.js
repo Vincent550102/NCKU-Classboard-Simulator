@@ -68,14 +68,14 @@
             'id': 'toaster',
             'container': 'body',
             'template': '<div></div>',
-            'class': 'toaster alert',
+            'class': 'toaster',
             'css':
             {
                 'position': 'fixed',
                 'top': '10px',
                 'right': '10px',
                 'width': '300px',
-                'zIndex': 50000
+                'zIndex': 50000,
             }
         },
 
