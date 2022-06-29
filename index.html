@@ -29,20 +29,30 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">匯出課程</a>
+                    <button type="button" class="nav-link" id="exportclass" data-bs-toggle="modal"
+                        data-bs-target="#exportClass">
+                        匯出課程
+                    </button>
+                    <!-- <a class="nav-link" href="#">匯出課程</a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">匯入課程</a>
+                    <button type="button" class="nav-link" id="importclass" data-bs-toggle="modal"
+                        data-bs-target="#confirmImportClass">
+                        匯入課程
+                    </button>
+                    <!-- <a class="nav-link" href="#">匯入課程</a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">分享課表</a>
+                    <button type="button" class="nav-link" id="convertimg">
+                        分享課表
+                    </button>
                 </li>
             </ul>
         </div>
     </nav>
 
 
-    <div class="table-responsive" style="margin-top: 25px; margin-left: 60px;margin-right: 60px;">
+    <div class="table-responsive" style="margin-top: 25px; margin-left: 60px;margin-right: 60px;" id="classboardPre">
         <table class="table table-striped table-bordered" id="classboard"
             style="line-height:50px;table-layout:fixed;text-align:center;">
             <thead>
@@ -83,6 +93,89 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="exportClass" tabindex="-1" aria-labelledby="exportClassModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportClassModalLabel">匯出課程</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">
+                        🔊請善用此功能來將您精心設計的課表備份，或分享給你的朋友！
+                    </div>
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text" id="inputGroup-sizing-default">匯出代碼</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" id="export_input_code" value="">
+                        <a href="javascript:void(0)" urlAttr="" class="btn btn-secondary btn-default  my-link-btn"
+                            role="button" id="urlButton_code" onclick=""><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                <path
+                                    d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                <path
+                                    d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                            </svg></a>
+
+
+                    </div>
+                    <hr>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">匯出網址</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default" id="export_input_url" value="">
+                        <a href="javascript:void(0)" urlAttr="" class="btn btn-secondary btn-default  my-link-btn"
+                            role="button" id="urlButton_url" onclick=""><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                <path
+                                    d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                <path
+                                    d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                            </svg></a>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="confirmImportClass" tabindex="-1" aria-labelledby="confirmImportClassModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmImportClassModalLabel">匯入課程</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">
+                        ⚠️請特別注意，此動作將會覆蓋您目前的課表，請慎重使用。
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">匯入代號</span>
+                        <input type="text" class="form-control" placeholder="WyJBOTJFNzAwIiwiQTkyRjAwMCJd"
+                            id="confirmImportClass_input" aria-label="confirmImportClass"
+                            aria-describedby="confirmImportClass_input">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" id="confirmImportClass_btn"
+                        data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 
