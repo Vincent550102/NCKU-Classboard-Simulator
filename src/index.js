@@ -331,9 +331,7 @@ function putShareClassDownloadBtn() {
 }
 
 //TODO
-//1. 教學按鈕
-//2. alert 變漂亮
-//3. render race condition
+//1. fulfill RWD (視窗)
 
 function getQuery(q) {
     return (window.location.search.match(new RegExp('[?&]' + q + '=([^&]+)')) || [, null])[1];
