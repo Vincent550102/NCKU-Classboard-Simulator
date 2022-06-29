@@ -19,45 +19,53 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <nav class="navbar navbar-expand-lg bg-light sticky-top" tabindex="-1">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" style="font-size: 2rem">NCKU 選課模擬器</a>
-            <ul class="nav nav-pills justify-content-end" style="font-size: 1.3rem">
-                <li class="nav-item">
-                    <button type="button" class="nav-link active" id="addclass" data-bs-toggle="modal"
-                        data-bs-target="#addclassModal">
-                        增加課程
-                    </button>
-                </li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="nav nav-pills justify-content-end" style="font-size: 1.3rem">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" id="addclass" data-bs-toggle="modal"
+                            data-bs-target="#addclassModal">
+                            增加課程
+                        </button>
+                    </li>
 
-                <li class="nav-item">
-                    <button type="button" class="nav-link" id="exportclass" data-bs-toggle="modal"
-                        data-bs-target="#exportClass">
-                        匯出課程
-                    </button>
-                    <!-- <a class="nav-link" href="#">匯出課程</a> -->
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="nav-link" id="importclass" data-bs-toggle="modal"
-                        data-bs-target="#confirmImportClass">
-                        匯入課程
-                    </button>
-                    <!-- <a class="nav-link" href="#">匯入課程</a> -->
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="nav-link" id="shareclass" data-bs-toggle="modal"
-                        data-bs-target="#shareClass">
-                        分享課表
-                    </button>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" id="exportclass" data-bs-toggle="modal"
+                            data-bs-target="#exportClass">
+                            匯出課程
+                        </button>
+                        <!-- <a class="nav-link" href="#">匯出課程</a> -->
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" id="importclass" data-bs-toggle="modal"
+                            data-bs-target="#confirmImportClass">
+                            匯入課程
+                        </button>
+                        <!-- <a class="nav-link" href="#">匯入課程</a> -->
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" id="shareclass" data-bs-toggle="modal"
+                            data-bs-target="#shareClass">
+                            分享課表
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </nav>
 
 
-    <div class="table-responsive" style="margin-top: 25px; margin-left: 60px;margin-right: 60px;" id="classboardPre">
-        <table class="table table-striped table-bordered" id="classboard"
-            style="line-height:50px;table-layout:fixed;text-align:center;">
+    <div tabindex="-1" style="margin-top: 2.5vh; margin-left: 2.5vw;margin-right: 2.5vw;" id="classboardPre">
+        <table class="table table-bordered" id="classboard"
+            style="line-height:50px;word-wrap: break-word;table-layout: fixed;text-align:center;">
             <thead>
                 <tr class="table-secondary">
                     <th scope="col">#</th>

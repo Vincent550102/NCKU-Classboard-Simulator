@@ -40,7 +40,7 @@ function genTimeboard() {
     $("#classboard > tbody").children().remove()
     // console.log($("#classboard > tbody").children())
     classSession.forEach(element => {
-        tr = `<tr><th scope=\"row\">${element}</th>`
+        tr = `<tr><th scope="row" style="break:break-all;">${element}</th>`
         weekId.forEach(week => {
             tr += `<td id="${week}-${element[0]}" style="vertical-align:middle;"></td>`
         })
@@ -85,6 +85,7 @@ function addBtnModal(classId, classEle) {
             this.remove()
         })
         Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).filter(element => element !== classId))))
+        $.toaster('成功刪除', '刪除課程', 'success');
         renderClassbtns()
     })
 }
@@ -111,7 +112,6 @@ function renderClassbtns() {
         })
     });
     updExportmess()
-
 }
 
 
@@ -183,7 +183,7 @@ function putClassidbtnSubmit() {
                 } else {
                     Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).concat([classid]))))
                 }
-                $.toaster('新增失敗', '新增課程', 'success');
+                $.toaster('新增成功', '新增課程', 'success');
                 renderClassbtns()
             }
         });

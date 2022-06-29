@@ -72,7 +72,7 @@
             'css':
             {
                 'position': 'fixed',
-                'top': '10px',
+                'top': '75px',
                 'right': '10px',
                 'width': '300px',
                 'zIndex': 50000,
@@ -122,7 +122,7 @@
         },
 
         'debug': false,
-        'timeout': 5000,
+        'timeout': 3000,
         'stylesheet': null,
         'donotdismiss': []
     };
