@@ -10,9 +10,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          external_repository: Vincent550102/NCKU-Classboard-Simulator
-          publish_dir: ./
-          publish_branch: gh-page
+        run: /usr/bin/git clone --depth=1 --single-branch --branch gh-page git@github.com:Vincent550102/NCKU-Classboard-Simulator.git 
