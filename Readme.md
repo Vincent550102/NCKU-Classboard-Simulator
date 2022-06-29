@@ -1,0 +1,1 @@
+[![HTML Deploy](https://github.com/Vincent550102/NCKU-Classboard-Simulator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Vincent550102/NCKU-Classboard-Simulator/actions/workflows/deploy.yml)
