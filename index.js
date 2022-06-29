@@ -351,8 +351,7 @@ function putTableconvertImageBtn() {
             type: "POST",
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Host': 'htmlcsstoimage.com'
+                'Content-Type': 'application/json'
             },
             url: "https://htmlcsstoimage.com/demo_run",
             data: {
