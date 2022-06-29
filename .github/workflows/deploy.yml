@@ -14,8 +14,6 @@ jobs:
           fetch-depth: 0
       - name: Deploy
         run: git checkout gh-page
-      - name: clone
-        run: git clone --depth 1 https://github.com/Vincent550102/NCKU-Classboard-Simulator.git
       - name: commit gh-page
         run: |
           git config --local user.name "github-actions[bot]"
