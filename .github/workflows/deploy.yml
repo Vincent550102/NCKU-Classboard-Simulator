@@ -15,4 +15,4 @@ jobs:
       - name: Deploy
         run: git checkout gh-page
       - name: clone
-        run: git clone --depth 1 git@github.com:Vincent550102/NCKU-Classboard-Simulator.git
+        run: git clone --depth 1 https://github.com/Vincent550102/NCKU-Classboard-Simulator.git
