@@ -40,7 +40,7 @@ function genTimeboard() {
     $("#classboard > tbody").children().remove()
     // console.log($("#classboard > tbody").children())
     classSession.forEach(element => {
-        tr = `<tr><th scope=\"row\">${element}</th>`
+        tr = `<tr><th scope="row" style="break:break-all;">${element}</th>`
         weekId.forEach(week => {
             tr += `<td id="${week}-${element[0]}" style="vertical-align:middle;"></td>`
         })
@@ -85,6 +85,7 @@ function addBtnModal(classId, classEle) {
             this.remove()
         })
         Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).filter(element => element !== classId))))
+        $.toaster('成功刪除', '刪除課程', 'success');
         renderClassbtns()
     })
 }
@@ -111,7 +112,6 @@ function renderClassbtns() {
         })
     });
     updExportmess()
-
 }
 
 
@@ -163,19 +163,19 @@ function putClassidbtnSubmit() {
         var classid = $("#classid_input").val()
         $.getJSON("111data.json", function (classesJson) {
             if (classid.length === 0) {
-                alert("請輸入課程代號")
+                $.toaster('新增失敗', '請輸入匯入代號', 'warning');
                 return
             } else if (classid.includes('<') || classid.includes('>')) {
-                alert(`我知道你在幹嘛`)
+                $.toaster('新增失敗', '我知道你在幹嘛', 'danger');
                 return
             } else if (classid in classesJson === false) {
-                alert(`找不到此課程代碼 ${classid}`)
+                $.toaster('新增失敗', `找不到此課程代碼 ${classid}`, 'danger');
                 return
             } else if (chkClassExist(classid, classesJson)) {
-                alert(`此課程已經存在 ${chkClassExist(classid, classesJson)}`)
+                $.toaster('新增失敗', `此課程已經存在 ${chkClassExist(classid, classesJson)}`, 'danger');
                 return
             } else if (chkClassInterupt(classid, classesJson)) {
-                alert(`此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`)
+                $.toaster('新增失敗', `此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`, 'danger');
                 return
             } else {
                 if (Cookies.get('classSess') === undefined) {
@@ -183,6 +183,7 @@ function putClassidbtnSubmit() {
                 } else {
                     Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).concat([classid]))))
                 }
+                $.toaster('新增成功', '新增課程', 'success');
                 renderClassbtns()
             }
         });
@@ -196,17 +197,17 @@ function importClass(importCode, classesJson) {
         var importClass = false
     }
     if (importCode.length === 0) {
-        alert("請輸入匯入代號")
+        $.toaster('匯入失敗', '請輸入匯入代號', 'warning');
         return false
     } else if (importClass === false) {
-        alert("匯入代號格式錯誤")
+        $.toaster('匯入失敗', '匯入代號格式錯誤', 'danger');
         return false
     } else if (!chkClassesallExist(importClass, classesJson)) {
-        alert("匯入失敗，課程代號內含有不存在的課程")
+        $.toaster('匯入失敗', '課程代號內含有不存在的課程', 'danger');
         return false
     } else {
         modCookie(importCode)
-        alert("匯入成功")
+        $.toaster('匯入成功', '匯入課程', 'success');
         return true
     }
 }
@@ -223,21 +224,12 @@ function putClassImportbtnSubmit() {
 }
 
 function copyToClipboard(copy_text) {
-    var textarea = document.createElement("textarea");
-    textarea.textContent = copy_text;
-    document.body.appendChild(textarea);
-
-    var selection = document.getSelection();
-    var range = document.createRange();
-    range.selectNode(textarea);
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    var success = document.execCommand("copy");
-    selection.removeAllRanges();
-    document.body.removeChild(textarea);
-    return success;
+    navigator.clipboard.writeText(copy_text)
+    return "success";
 }
+
+
+
 function updExportmess() {
     $("#urlButton_code").html(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
     <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
@@ -304,6 +296,40 @@ function putExportCopyBtn() {
     })
 }
 
+function convertBase64ToBlob(base64, type) {
+    var bytes = window.atob(base64);
+    var ab = new ArrayBuffer(bytes.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+    }
+    return new Blob([ab], { type: type });
+}
+
+function putShareClassCopyBtn() {
+    // Select the email link anchor text  
+    $("#shareclasscopy").click(() => {
+        console.log($("#shareclassimg").attr("src").replace("data:image/png;base64", ""))
+        const blobInput = convertBase64ToBlob($("#shareclassimg").attr("src").replace("data:image/png;base64,", ""), 'image/png');
+        navigator.clipboard.write([new ClipboardItem({
+            "image/png": blobInput
+        })]).then(() => {
+            $.toaster('複製成功', '分享課表', 'success');
+        })
+        return "success";
+    })
+}
+
+function putShareClassDownloadBtn() {
+    // Select the email link anchor text  
+    $("#shareclassdownload").click(() => {
+        var a = document.createElement("a"); //Create <a>
+        a.href = "data:image/png;base64," + $("#shareclassimg").attr("src").replace("data:image/png;base64,", "")
+        a.download = "classboard.png"
+        a.click();
+    })
+}
+
 //TODO
 //1. 教學按鈕
 //2. alert 變漂亮
@@ -340,27 +366,21 @@ function init() {
 }
 
 function putTableconvertImageBtn() {
-    $("#convertimg").click(function () {
+    $("#shareclass").click(function () {
         var html = `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
         crossorigin="anonymous"></script>`+ $("#classboardPre").html()
         console.log(html)
-        $.ajax({
-            type: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
-            },
-            url: "https://htmlcsstoimage.com/demo_run",
-            data: {
-                "html": html
-            },
-            success: function (response) {
-                console.log(response)
-            }
-        })
+        var $div = $("#classboardimg");
+        $div.html(`<div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>`)
+        html2canvas($("#classboardPre")[0]).then(function (canvas) {
+            $div.empty()
+            $(`<img />`, { src: canvas.toDataURL("image/png"), id: "shareclassimg", style: "width:450px; display:block; margin:auto;" }).appendTo($div);
+        });
     })
 }
 
@@ -371,6 +391,8 @@ $(document).ready(function () {
     putExportCopyBtn()
     putClassImportbtnSubmit()
     putTableconvertImageBtn()
+    putShareClassCopyBtn()
+    putShareClassDownloadBtn()
     // console.log($("#classboard").html())
     //["A92E700"]
     // Cookies.set('classSess', 'WyJBOTJFNzAwIl0=');
