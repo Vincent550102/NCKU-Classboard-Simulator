@@ -10,4 +10,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Deploy
-        run: /usr/bin/git clone --depth=1 --single-branch --branch gh-page git@github.com:Vincent550102/NCKU-Classboard-Simulator.git 
+        run: git checkout gh-page
+      - name: pull
+        run: git pull origin master
