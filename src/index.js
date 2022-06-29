@@ -365,12 +365,21 @@ function putTableconvertImageBtn() {
     })
 }
 
+function alerter(title, context) {
+    $("#toast-title").text(title)
+    $("#toast-context").text(context)
+    var toast = new bootstrap.Toast($("#alertToast"))
+    toast.show()
+}
+
 $(document).ready(function () {
     init()
     putClassidbtnSubmit()
     putExportCopyBtn()
     putClassImportbtnSubmit()
     putTableconvertImageBtn()
+    alerter("owo", "43434")
+    alerter("owo24", "4343q4")
     // console.log($("#classboard").html())
     //["A92E700"]
     // Cookies.set('classSess', 'WyJBOTJFNzAwIl0=');

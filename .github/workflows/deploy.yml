@@ -9,8 +9,13 @@ jobs:
   build-deploy:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          external_repository: Vincent550102/NCKU-Classboard-Simulator
           publish_dir: ./src
+          publish_branch: gh-page
