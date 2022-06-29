@@ -9,8 +9,8 @@ jobs:
   build-deploy:
     runs-on: ubuntu-20.04
     steps:
-      - name: Clone repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          owner: 'Vincent550102'
-          repository: 'NCKU-Classboard-Simulator'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./src
