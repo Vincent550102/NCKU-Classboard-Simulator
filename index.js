@@ -393,7 +393,7 @@ $(document).ready(function () {
     putShareClassDownloadBtn()
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1/owo",
+        url: "https://127.0.0.1/owo",
         success: function (response) {
             console.log(response)
         }
