@@ -391,6 +391,13 @@ $(document).ready(function () {
     putTableconvertImageBtn()
     putShareClassCopyBtn()
     putShareClassDownloadBtn()
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1/owo",
+        success: function (response) {
+            console.log(response)
+        }
+    });
     // console.log($("#classboard").html())
     //["A92E700"]
     // Cookies.set('classSess', 'WyJBOTJFNzAwIl0=');
