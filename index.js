@@ -86,7 +86,7 @@ function addBtnModal(classId, classEle) {
         })
         Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).filter(element => element !== classId))))
         $.toaster('成功刪除', '刪除課程', 'success');
-        renderClassbtns()
+        updExportmess()
     })
 }
 
