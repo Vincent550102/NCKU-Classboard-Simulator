@@ -21,26 +21,26 @@ function genTimeboard() {
         "U"  //Sun
     ]
     classSession = [
-        "0 (07:10~08:00)",
-        "1 (08:10~09:00)",
-        "2 (09:10~10:00)",
-        "3 (10:10~11:00)",
-        "4 (11:10~12:00)",
-        "N (12:10:13:00)",
-        "5 (13:10~14:00)",
-        "6 (14:10~15:00)",
-        "7 (15:10~16:00)",
-        "8 (16:10~17:00)",
-        "9 (17:10~18:00)",
-        "A (18:10~19:00)",
-        "B (19:10~20:00)",
-        "C (20:10~21:00)",
-        "D (21:10~22:00)",
+        "0 <br>(07:10~08:00)",
+        "1 <br>(08:10~09:00)",
+        "2 <br>(09:10~10:00)",
+        "3 <br>(10:10~11:00)",
+        "4 <br>(11:10~12:00)",
+        "N <br>(12:10:13:00)",
+        "5 <br>(13:10~14:00)",
+        "6 <br>(14:10~15:00)",
+        "7 <br>(15:10~16:00)",
+        "8 <br>(16:10~17:00)",
+        "9 <br>(17:10~18:00)",
+        "A <br>(18:10~19:00)",
+        "B <br>(19:10~20:00)",
+        "C <br>(20:10~21:00)",
+        "D <br>(21:10~22:00)",
     ]
     $("#classboard > tbody").children().remove()
     // console.log($("#classboard > tbody").children())
     classSession.forEach(element => {
-        tr = `<tr><th scope="row" style="break:break-all;">${element}</th>`
+        tr = `<tr ><th scope="row" style="break:break-all;" width="10px">${element}</th>`
         weekId.forEach(week => {
             tr += `<td id="${week}-${element[0]}" style="vertical-align:middle;"></td>`
         })
@@ -391,13 +391,6 @@ $(document).ready(function () {
     putTableconvertImageBtn()
     putShareClassCopyBtn()
     putShareClassDownloadBtn()
-    $.ajax({
-        type: "GET",
-        url: "https://127.0.0.1/owo",
-        success: function (response) {
-            console.log(response)
-        }
-    });
     // console.log($("#classboard").html())
     //["A92E700"]
     // Cookies.set('classSess', 'WyJBOTJFNzAwIl0=');
