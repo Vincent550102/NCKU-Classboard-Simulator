@@ -62,7 +62,7 @@ function addBtnModal(classId, classEle) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>課程代號：${classId}</p>
+                    <p>課程代號：${classId.split("-")[0]}</p>
                     <p>系所名稱：${classEle["department"]}</p>
                     <p>選/必修：${classEle["chooseOrselect"]}</p>
                     <p>上課時間：${classEle["timeraw"]}</p>
@@ -158,34 +158,53 @@ function chkClassesallExist(classes, classesJson) {
     return cnt === classes.length
 }
 
+function addClass(classid, classesJson) {
+    if (classid.length === 0) {
+        $.toaster('新增失敗', '請輸入匯入代號', 'warning');
+        return
+    } else if (classid.includes('<') || classid.includes('>')) {
+        $.toaster('新增失敗', '我知道你在幹嘛', 'danger');
+        return
+    } else if (classid in classesJson === false) {
+        $.toaster('新增失敗', `找不到此課程代碼 ${classid}`, 'danger');
+        return
+    } else if (Array.isArray(classesJson[classid])) {
+        console.log(classesJson)
+        sz = classesJson[classid].length
+        promptText = `此課程代碼 ${classid} 共有 ${sz} 門課程時段，請選擇要新增的時段，並輸入代號`
+        for (var i = 0; i < sz; i++) {
+            promptText += `\n${i}：[${classesJson[classid][i]['department']}-${classesJson[classid][i]['teacher']}]${classesJson[classid][i]['name']}（${classesJson[classid][i]['timeraw']}）`
+        }//department teacher
+        while (1) {
+            resp = parseInt(prompt(promptText))
+            if (0 <= resp && resp < sz) {
+                addClass(`${classid}-${resp}`, classesJson)
+                break
+            }
+        }
+        return
+    } else if (chkClassExist(classid, classesJson)) {
+        $.toaster('新增失敗', `此課程已經存在 ${chkClassExist(classid, classesJson)}`, 'danger');
+        return
+    } else if (chkClassInterupt(classid, classesJson)) {
+        $.toaster('新增失敗', `此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`, 'danger');
+        return
+    } else {
+        if (Cookies.get('classSess') === undefined) {
+            Cookies.set('classSess', btoa(JSON.stringify([classid])))
+        } else {
+            Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).concat([classid]))))
+        }
+        $.toaster('新增成功', '新增課程', 'success');
+        renderClassbtns()
+    }
+}
+
 function putClassidbtnSubmit() {
     $("#classid_input_btn").click(() => {
         var classid = $("#classid_input").val()
         $.getJSON("111data.json", function (classesJson) {
-            if (classid.length === 0) {
-                $.toaster('新增失敗', '請輸入匯入代號', 'warning');
-                return
-            } else if (classid.includes('<') || classid.includes('>')) {
-                $.toaster('新增失敗', '我知道你在幹嘛', 'danger');
-                return
-            } else if (classid in classesJson === false) {
-                $.toaster('新增失敗', `找不到此課程代碼 ${classid}`, 'danger');
-                return
-            } else if (chkClassExist(classid, classesJson)) {
-                $.toaster('新增失敗', `此課程已經存在 ${chkClassExist(classid, classesJson)}`, 'danger');
-                return
-            } else if (chkClassInterupt(classid, classesJson)) {
-                $.toaster('新增失敗', `此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`, 'danger');
-                return
-            } else {
-                if (Cookies.get('classSess') === undefined) {
-                    Cookies.set('classSess', btoa(JSON.stringify([classid])))
-                } else {
-                    Cookies.set('classSess', btoa(JSON.stringify(JSON.parse(atob(Cookies.get('classSess'))).concat([classid]))))
-                }
-                $.toaster('新增成功', '新增課程', 'success');
-                renderClassbtns()
-            }
+            addClass(classid, classesJson)
         });
     })
 }
@@ -268,6 +287,17 @@ function putExportCopyBtn() {
             $("#urlButton_code").removeClass("btn-secondary")
                 .addClass("btn-success");
             $.toaster('複製成功', '匯出代碼', 'success');
+            setTimeout(() => {
+                $("#urlButton_code").html(`<svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                        <path
+                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                        <path
+                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                    </svg>`)
+                $("#urlButton_code").removeClass("btn-success")
+                    .addClass("btn-secondary");
+            }, "2000");
         } else {
             $("#urlButton_code").text("複製失敗 :(");
             $("#urlButton_code").removeClass("btn-secondary")
@@ -286,6 +316,17 @@ function putExportCopyBtn() {
             $("#urlButton_url").removeClass("btn-secondary")
                 .addClass("btn-success");
             $.toaster('複製成功', '匯出網址', 'success');
+            setTimeout(() => {
+                $("#urlButton_url").html(`<svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                        <path
+                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                        <path
+                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                    </svg>`)
+                $("#urlButton_url").removeClass("btn-success")
+                    .addClass("btn-secondary");
+            }, "2000");
         } else {
             $("#urlButton_url").text("複製失敗 :(");
             $("#urlButton_url").removeClass("btn-secondary")
@@ -307,7 +348,7 @@ function convertBase64ToBlob(base64, type) {
 }
 
 function putShareClassCopyBtn() {
-    // Select the email link anchor text  
+    // Select the email link anchor text
     $("#shareclasscopy").click(() => {
         console.log($("#shareclassimg").attr("src").replace("data:image/png;base64", ""))
         const blobInput = convertBase64ToBlob($("#shareclassimg").attr("src").replace("data:image/png;base64,", ""), 'image/png');
@@ -321,7 +362,7 @@ function putShareClassCopyBtn() {
 }
 
 function putShareClassDownloadBtn() {
-    // Select the email link anchor text  
+    // Select the email link anchor text
     $("#shareclassdownload").click(() => {
         var a = document.createElement("a"); //Create <a>
         a.href = "data:image/png;base64," + $("#shareclassimg").attr("src").replace("data:image/png;base64,", "")
