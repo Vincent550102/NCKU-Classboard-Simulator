@@ -214,6 +214,7 @@ function putClassidbtnSubmit() {
 }
 
 function importClass(importCode, classesJson) {
+
     try {
         var importClass = JSON.parse(atob(importCode))
     } catch (e) {
@@ -237,7 +238,8 @@ function importClass(importCode, classesJson) {
 
 function putClassImportbtnSubmit() {
     $("#confirmImportClass_btn").click(() => {
-        var importCode = $("#confirmImportClass_input").val()
+        var importCode = decodeURIComponent($("#confirmImportClass_input").val())
+        console.log(importCode)
         $.getJSON("111data.json", function (classesJson) {
             if (importClass(importCode, classesJson)) {
                 renderClassbtns()
@@ -387,8 +389,7 @@ function init() {
         $.getJSON("111data.json", function (classesJson) {
             if (Cookies.get('classSess')) {
                 if (confirm("你這個動作將會覆蓋掉目前的課表")) {
-                    console.log(getQuery("share"))
-                    if (importClass(getQuery("share"), classesJson)) {
+                    if (importClass(decodeURIComponent(getQuery("share")), classesJson)) {
                         renderClassbtns()
                     } else {
                         renderClassbtns()
@@ -397,7 +398,7 @@ function init() {
                     renderClassbtns()
                 }
             } else {
-                if (importClass(getQuery("share"), classesJson)) {
+                if (importClass(decodeURIComponent(getQuery("share")), classesJson)) {
                     renderClassbtns()
                 } else {
                     renderClassbtns()
