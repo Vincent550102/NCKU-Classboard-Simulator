@@ -62,7 +62,7 @@ function addBtnModal(classId, classEle) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>課程代號：${classId.split("-")[0]}</p>
+                    <p>課程代號：${classId.split('-')[0] + '-' + (parseInt(classId.split('-')[1]) + 1).toString()}</p>
                     <p>系所名稱：${classEle["department"]}</p>
                     <p>選/必修：${classEle["chooseOrselect"]}</p>
                     <p>上課時間：${classEle["timeraw"]}</p>
@@ -158,7 +158,11 @@ function chkClassesallExist(classes, classesJson) {
     return cnt === classes.length
 }
 
-function addClass(classid, classesJson) {
+function addClass(classid, classesJson, isparse = false) {
+    if (!isparse && classid.includes('-')) {
+        classid = classid.split('-')[0] + '-' + (parseInt(classid.split('-')[1]) - 1).toString()
+    }
+    console.log(classid)
     if (classid.length === 0) {
         $.toaster('新增失敗', '請輸入匯入代號', 'warning');
         return
@@ -178,7 +182,7 @@ function addClass(classid, classesJson) {
         while (1) {
             resp = parseInt(prompt(promptText))
             if (0 <= resp && resp < sz) {
-                addClass(`${classid}-${resp}`, classesJson)
+                addClass(`${classid}-${resp}`, classesJson, true)
                 break
             }
         }
@@ -190,9 +194,6 @@ function addClass(classid, classesJson) {
         $.toaster('新增失敗', `此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`, 'danger');
         return
     } else {
-        if (classid.includes('-')) {
-            classid = classid.split('-')[0] + '-' + toString(parseInt(classid.split('-')[1]) - 1)
-        }
         if (Cookies.get('classSess') === undefined) {
             Cookies.set('classSess', btoa(JSON.stringify([classid])))
         } else {
