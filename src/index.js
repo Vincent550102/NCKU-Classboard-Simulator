@@ -62,7 +62,7 @@ function addBtnModal(classId, classEle) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>課程代號：${classId.split('-')[0] + '-' + (parseInt(classId.split('-')[1]) + 1).toString()}</p>
+                    <p>課程代號：${classId.includes('-') ? classId.split('-')[0] + '-' + (parseInt(classId.split('-')[1]) + 1).toString() : classId}</p>
                     <p>系所名稱：${classEle["department"]}</p>
                     <p>選/必修：${classEle["chooseOrselect"]}</p>
                     <p>上課時間：${classEle["timeraw"]}</p>
