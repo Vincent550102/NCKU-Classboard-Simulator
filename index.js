@@ -190,6 +190,9 @@ function addClass(classid, classesJson) {
         $.toaster('新增失敗', `此課程與 ${chkClassInterupt(classid, classesJson)} 衝堂`, 'danger');
         return
     } else {
+        if (classid.includes('-')) {
+            classid = classid.split('-')[0] + '-' + toString(parseInt(classid.split('-')[1]) - 1)
+        }
         if (Cookies.get('classSess') === undefined) {
             Cookies.set('classSess', btoa(JSON.stringify([classid])))
         } else {
